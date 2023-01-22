@@ -1,22 +1,24 @@
-project(template_test)
+project(pigzcpp_test)
 
 find_package(GTest REQUIRED)
 include(GoogleTest)
 
-# add_executable(${PROJECT_NAME} "")
+file(COPY files DESTINATION ${CMAKE_BINARY_DIR}/test)
 
-# set_target_properties(${PROJECT_NAME} PROPERTIES
-#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/tests"
-# )
-# target_sources(${PROJECT_NAME} PRIVATE
-#     template_TEST.cpp
-# )
+add_executable(${PROJECT_NAME} "")
 
-# target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+target_sources(${PROJECT_NAME} PRIVATE
+    compressor_TEST.cpp
+    loader_TEST.cpp
+    pigzcpp_TEST.cpp
+    utils_TEST.cpp
+)
 
-# target_link_libraries(${PROJECT_NAME} PRIVATE
-#     template
-#     GTest::Main
-# )
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
-# gtest_discover_tests(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    pigz-cpp
+    GTest::Main
+)
+
+gtest_discover_tests(${PROJECT_NAME})

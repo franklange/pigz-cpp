@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(pigz-cpp)
 
 find_package(Threads REQUIRED)
+find_package(ZLIB REQUIRED)
 
 option(PIGZCPP_TESTS "Enable Tests" OFF)
 option(PIGZCPP_EXAMPLES "Enable Examples" OFF)
@@ -18,9 +19,17 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+    include/pigz-cpp/compressor.hpp
+    include/pigz-cpp/defaults.hpp
+    include/pigz-cpp/loader.hpp
     include/pigz-cpp/pigz.hpp
+    include/pigz-cpp/types.hpp
+    include/pigz-cpp/utils.hpp
 
+    src/compressor.cpp
+    src/loader.cpp
     src/pigz.cpp
+    src/utils.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
@@ -28,6 +37,7 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
     Threads::Threads
+    ZLIB::ZLIB
 )
 
 if (PIGZCPP_TESTS)
